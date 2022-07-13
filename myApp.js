@@ -1,9 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const conexion = process.env.MONGO_URI;
-
-console.log(conexion);
-mongoose.connect(conexion, { useNewUrlParser: false });
+mongoose.connect(process.env.MONGO_URI);
 
 let Person;
 
