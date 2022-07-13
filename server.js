@@ -41,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: "false" }));
 app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
+  console.log("Its Works!");
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
@@ -85,6 +86,7 @@ router.post("/mongoose-model", function (req, res, next) {
 const createPerson = require("./myApp.js").createAndSavePerson;
 router.get("/create-and-save-person", function (req, res, next) {
   // in case of incorrect function use wait timeout then respond
+  console.log('createAndSavePerson --> OK');
   let t = setTimeout(() => {
     next({ message: "timeout" });
   }, TIMEOUT);
@@ -102,13 +104,14 @@ router.get("/create-and-save-person", function (req, res, next) {
         return next(err);
       }
       res.json(pers);
-      pers.remove();
+      //pers.remove();
     });
   });
 });
 
 const createPeople = require("./myApp.js").createManyPeople;
 router.post("/create-many-people", function (req, res, next) {
+  console.log('createManyPeople --> OK');
   Person.remove({}, function (err) {
     if (err) {
       return next(err);
@@ -131,7 +134,7 @@ router.post("/create-many-people", function (req, res, next) {
           return next(err);
         }
         res.json(pers);
-        Person.remove().exec();
+        //Person.remove().exec();
       });
     });
   });
@@ -139,6 +142,7 @@ router.post("/create-many-people", function (req, res, next) {
 
 const findByName = require("./myApp.js").findPeopleByName;
 router.post("/find-all-by-name", function (req, res, next) {
+  console.log('findPeopleByName --> OK');
   let t = setTimeout(() => {
     next({ message: "timeout" });
   }, TIMEOUT);
@@ -156,7 +160,7 @@ router.post("/find-all-by-name", function (req, res, next) {
         return next({ message: "Missing callback argument" });
       }
       res.json(data);
-      Person.remove().exec();
+      //Person.remove().exec();
     });
   });
 });

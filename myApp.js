@@ -17,7 +17,7 @@ const createAndSavePerson = function(done) {
   const person = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
 
   person.save(function(err, data) {
-    if (err) return console.error(err);
+    if (err) return done(err);
     console.log(data);
     done(null, data)
   });
@@ -30,24 +30,28 @@ const arrayOfPeople = [
   {name: "Robert", age: 78, favoriteFoods: ["wine"]}
 ];
 const createManyPeople = function(arrayOfPeople, done) {
-  Person.create(arrayOfPeople, function (err, people) {
-    if (err) return console.log(err);
-    done(null, people);
+  Person.create(arrayOfPeople, function (err, data) {
+    if (err) return done(err);
+    console.log(data);
+    done(null, data);
   });
 };
 
 /** 5) Use `Model.find()` */
 const findPeopleByName = function(personName, done) {
   Person.find({name: personName}, function (err, personFound) {
-    if (err) return console.log(err);
+    if (err) return done(err);
+    console.log(personFound);
     done(null, personFound);
   });
 };
 
 /** 6) Use `Model.findOne()` */
 const findOneByFood = function(food, done) {
+  console.log(food);
   Person.findOne({favoriteFoods: food}, function (err, data) {
-    if (err) return console.log(err);
+    if (err) return done(err);
+    console.log(data);
     done(null, data);
   });
 };
@@ -55,7 +59,7 @@ const findOneByFood = function(food, done) {
 /** 7) Use `Model.findById()` */
 const findPersonById = function(personId, done) {
   Person.findById(personId, function (err, data) {
-    if (err) return console.log(err);
+    if (err) return done(err);
     done(null, data);
   });
 };
@@ -73,7 +77,7 @@ const findEditThenSave = (personId, done) => {
     // and inside the find callback - save() the updated Person.
     person.save((err, updatedPerson) => {
       if(err) return console.log(err);
-      done(null, updatedPerson)
+      done(null, updatedPerson);
     })
   })
 };
