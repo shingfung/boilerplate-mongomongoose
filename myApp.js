@@ -13,8 +13,8 @@ mongoose.connect(process.env.MONGO_URI);
 
 const Person = mongoose.model("Person", personSchema);
 
-var createAndSavePerson = function(done) {
-  var person = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+const createAndSavePerson = function(done) {
+  const person = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
 
   person.save(function(err, data) {
     if (err) return console.error(err);
@@ -23,20 +23,20 @@ var createAndSavePerson = function(done) {
   });
 };
 
+/** 4) Create many People with `Model.create()` */
 const arrayOfPeople = [
   {name: "Frankie", age: 74, favoriteFoods: ["Del Taco"]},
   {name: "Sol", age: 76, favoriteFoods: ["roast chicken"]},
   {name: "Robert", age: 78, favoriteFoods: ["wine"]}
 ];
-
 const createManyPeople = function(arrayOfPeople, done) {
   Person.create(arrayOfPeople, function (err, people) {
     if (err) return console.log(err);
-    console.log(people);
     done(null, people);
   });
 };
 
+/** 5) Use `Model.find()` */
 const findPeopleByName = function(personName, done) {
   Person.find({name: personName}, function (err, personFound) {
     if (err) return console.log(err);
@@ -44,7 +44,7 @@ const findPeopleByName = function(personName, done) {
   });
 };
 
-
+/** 6) Use `Model.findOne()` */
 const findOneByFood = function(food, done) {
   Person.findOne({favoriteFoods: food}, function (err, data) {
     if (err) return console.log(err);
@@ -52,8 +52,12 @@ const findOneByFood = function(food, done) {
   });
 };
 
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+/** 7) Use `Model.findById()` */
+const findPersonById = function(personId, done) {
+  Person.findById(personId, function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
 };
 
 const findEditThenSave = (personId, done) => {
